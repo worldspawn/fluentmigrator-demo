@@ -33,7 +33,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <PropertyGroup>
-        <dbName Condition="'$(dbName)' == ''">migdemo</dbName>
+        <dbName Condition="'$(dbName)' == ''">fluentdemo</dbName>
         <dbMigratorPath Condition="'$(dbMigratorPath)' == ''">$(SolutionDir)packages\FluentMigrator.Tools.1.0.2.0\tools\AnyCPU\40\</dbMigratorPath>
         <dbVersion Condition="'$(dbVersion)' == ''">0</dbVersion>
         <rollbackSteps Condition="'$(rollbackSteps)' == ''">1</rollbackSteps>
@@ -75,10 +75,10 @@
         <Copy SourceFiles="$(TargetDir)MySql.Data.dll" DestinationFiles="$(dbMigratorPath)Mysql.Data.dll" />
     </Target>
     <Target Name="dbMigrate" DependsOnTargets="Build;FluentMigratorPreReq">
-        <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=mysql --c=&quot;Data Source=localhost;Database=$(dbName);User Id=seloger;Password=seloger!;&quot; --verbose=true --version=$(dbVersion)" />
+        <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=sqlserver2008 --c=&quot;Data Source=(local);Database=$(dbName);Integrated Security=SSPI;&quot; --verbose=true --version=$(dbVersion)" />
     </Target>
     <Target Name="dbRollback" DependsOnTargets="Build;FluentMigratorPreReq">
-        <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=mysql --c=&quot;Data Source=localhost;Database=$(dbName);User Id=seloger;Password=seloger!;&quot; --verbose=true --task=rollback --steps=$(rollbackSteps)" />
+        <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=sqlserver2008 --c=&quot;Data Source=(local);Database=$(dbName);Integrated Security=SSPI;&quot; --verbose=true --task=rollback --steps=$(rollbackSteps)" />
     </Target>
     <PropertyGroup>
         <PostBuildEvent>
