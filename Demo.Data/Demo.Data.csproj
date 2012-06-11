@@ -74,10 +74,10 @@
     <Target Name="FluentMigratorPreReq">
         <Copy SourceFiles="$(TargetDir)MySql.Data.dll" DestinationFiles="$(dbMigratorPath)Mysql.Data.dll" />
     </Target>
-    <Target Name="dbMigrate" DependsOnTargets="Build;FluentMigratorPreReq">
+    <Target Name="dbMigrate" DependsOnTargets="Build;FluentMigratorPreReq;dbEcho">
         <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=sqlserver2008 --c=&quot;Data Source=(local);Database=$(dbName);Integrated Security=SSPI;&quot; --verbose=true --version=$(dbVersion)" />
     </Target>
-    <Target Name="dbRollback" DependsOnTargets="Build;FluentMigratorPreReq">
+    <Target Name="dbRollback" DependsOnTargets="Build;FluentMigratorPreReq;dbEcho">
         <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=sqlserver2008 --c=&quot;Data Source=(local);Database=$(dbName);Integrated Security=SSPI;&quot; --verbose=true --task=rollback --steps=$(rollbackSteps)" />
     </Target>
     <PropertyGroup>
