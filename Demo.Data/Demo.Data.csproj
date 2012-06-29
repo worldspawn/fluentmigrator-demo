@@ -1,90 +1,92 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>8.0.30703</ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{FDCC5B9A-187B-4217-A2B8-2826FB8D3F62}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Demo.Data</RootNamespace>
-        <AssemblyName>Demo.Data</AssemblyName>
-        <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
-        <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-        <RestorePackages>true</RestorePackages>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup>
-        <dbName Condition="'$(dbName)' == ''">fluentdemo</dbName>
-        <dbMigratorPath Condition="'$(dbMigratorPath)' == ''">$(SolutionDir)packages\FluentMigrator.Tools.1.0.2.0\tools\AnyCPU\40\</dbMigratorPath>
-        <dbVersion Condition="'$(dbVersion)' == ''">0</dbVersion>
-        <rollbackSteps Condition="'$(rollbackSteps)' == ''">1</rollbackSteps>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="FluentMigrator">
-            <HintPath>..\packages\FluentMigrator.1.0.2.0\lib\40\FluentMigrator.dll</HintPath>
-        </Reference>
-        <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\packages\MySql.Data.6.5.4\lib\net40\MySql.Data.dll</HintPath>
-        </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Migrations\001_CreateUserTable.cs" />
-        <Compile Include="Migrations\002_AddFieldToUser.cs" />
-        <Compile Include="Migrations\003_CreateMessageTable.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="packages.config">
-            <SubType>Designer</SubType>
-        </None>
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-    <Target Name="dbEcho">
-        <Message Text="dbName: $(dbName)" />
-        <Message Text="dbMigratorPath: $(dbMigratorPath)" />
-    </Target>
-    <Target Name="FluentMigratorPreReq">
-        <Copy SourceFiles="$(TargetDir)MySql.Data.dll" DestinationFiles="$(dbMigratorPath)Mysql.Data.dll" />
-    </Target>
-    <Target Name="dbMigrate" DependsOnTargets="Build;FluentMigratorPreReq;dbEcho">
-        <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=sqlserver2008 --c=&quot;Data Source=(local);Database=$(dbName);Integrated Security=SSPI;&quot; --verbose=true --version=$(dbVersion)" />
-    </Target>
-    <Target Name="dbRollback" DependsOnTargets="Build;FluentMigratorPreReq;dbEcho">
-        <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=sqlserver2008 --c=&quot;Data Source=(local);Database=$(dbName);Integrated Security=SSPI;&quot; --verbose=true --task=rollback --steps=$(rollbackSteps)" />
-    </Target>
-    <PropertyGroup>
-        <PostBuildEvent>
-        </PostBuildEvent>
-    </PropertyGroup>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FDCC5B9A-187B-4217-A2B8-2826FB8D3F62}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Demo.Data</RootNamespace>
+    <AssemblyName>Demo.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <dbName Condition="'$(dbName)' == ''">fluentdemo</dbName>
+    <dbMigratorPath Condition="'$(dbMigratorPath)' == ''">$(SolutionDir)packages\FluentMigrator.Tools.1.0.2.0\tools\AnyCPU\40\</dbMigratorPath>
+    <dbVersion Condition="'$(dbVersion)' == ''">0</dbVersion>
+    <rollbackSteps Condition="'$(rollbackSteps)' == ''">1</rollbackSteps>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentMigrator">
+      <HintPath>..\packages\FluentMigrator.1.0.2.0\lib\40\FluentMigrator.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.Data.6.5.4\lib\net40\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Migrations\001_CreateUserTable.cs" />
+    <Compile Include="Migrations\002_AddFieldToUser.cs" />
+    <Compile Include="Migrations\003_CreateMessageTable.cs" />
+    <Compile Include="Migrations\004_ExtendMessageTable.cs" />
+    <Compile Include="Migrations\005_InsertSomeUsers.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Target Name="dbEcho">
+    <Message Text="dbName: $(dbName)" />
+    <Message Text="dbMigratorPath: $(dbMigratorPath)" />
+  </Target>
+  <Target Name="FluentMigratorPreReq">
+    <Copy SourceFiles="$(TargetDir)MySql.Data.dll" DestinationFiles="$(dbMigratorPath)Mysql.Data.dll" />
+  </Target>
+  <Target Name="dbMigrate" DependsOnTargets="Build;FluentMigratorPreReq;dbEcho">
+    <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=sqlserver2008 --c=&quot;Data Source=(local);Database=$(dbName);Integrated Security=SSPI;&quot; --verbose=true --version=$(dbVersion)" />
+  </Target>
+  <Target Name="dbRollback" DependsOnTargets="Build;FluentMigratorPreReq;dbEcho">
+    <Exec Command="$(dbMigratorPath)Migrate.exe --target=&quot;$(TargetPath)&quot; --db=sqlserver2008 --c=&quot;Data Source=(local);Database=$(dbName);Integrated Security=SSPI;&quot; --verbose=true --task=rollback --steps=$(rollbackSteps)" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

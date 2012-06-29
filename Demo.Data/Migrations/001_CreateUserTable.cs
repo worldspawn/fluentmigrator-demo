@@ -8,8 +8,8 @@ namespace Demo.Data.Migrations
         public override void Up()
         {
             Create.Table("User")
-                .WithColumn("Id").AsGuid().PrimaryKey()
-                .WithColumn("Version").AsInt32().NotNullable();
+                .WithColumn("Id").AsGuid().PrimaryKey().WithDefault(SystemMethods.NewGuid)
+                .WithColumn("Version").AsInt32().NotNullable().WithDefaultValue(0);
         }
     }
 }
