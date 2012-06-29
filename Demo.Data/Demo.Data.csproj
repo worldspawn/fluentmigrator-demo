@@ -58,8 +58,7 @@
     <Compile Include="Migrations\001_CreateUserTable.cs" />
     <Compile Include="Migrations\002_AddFieldToUser.cs" />
     <Compile Include="Migrations\003_CreateMessageTable.cs" />
-    <Compile Include="Migrations\004_ExtendMessageTable.cs" />
-    <Compile Include="Migrations\005_InsertSomeUsers.cs" />
+    
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
